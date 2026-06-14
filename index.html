@@ -28,15 +28,16 @@ body {
     align-items: center;
     flex-direction: column;
     z-index: 9999;
-    transition: opacity 1s ease;
+    transition: opacity 1.2s ease;
 }
 
 .logo {
-    font-size: 3rem;
+    font-size: 2.5rem;
     font-weight: bold;
     color: white;
-    letter-spacing: 3px;
+    letter-spacing: 2px;
     text-transform: uppercase;
+    text-align: center;
     animation: glow 2s infinite alternate;
 }
 
@@ -47,7 +48,7 @@ body {
 }
 
 .loading-container {
-    width: 300px;
+    width: 320px;
 }
 
 .progress-bar {
@@ -63,13 +64,14 @@ body {
     width: 0%;
     background: linear-gradient(90deg,#06b6d4,#3b82f6,#8b5cf6);
     border-radius: 20px;
-    transition: width 0.2s;
+    transition: width 0.3s;
 }
 
 .loading-text {
     margin-top: 15px;
     color: white;
     text-align: center;
+    font-size: 0.95rem;
 }
 
 .stars {
@@ -93,16 +95,12 @@ iframe {
     height: 100vh;
     border: none;
     opacity: 0;
-    transition: opacity 1s ease;
+    transition: opacity 1.2s ease;
 }
 
 @keyframes glow {
-    from {
-        text-shadow: 0 0 10px #3b82f6;
-    }
-    to {
-        text-shadow: 0 0 30px #8b5cf6;
-    }
+    from { text-shadow: 0 0 10px #3b82f6; }
+    to { text-shadow: 0 0 30px #8b5cf6; }
 }
 
 @keyframes twinkle {
@@ -116,15 +114,15 @@ iframe {
 <div id="loader">
     <div class="stars" id="stars"></div>
 
-    <div class="logo">TSS</div>
-    <div class="subtitle">Launching Terrestrial Sentinel Siege...</div>
+    <div class="logo">TOWER DEFENCE LOADING</div>
+    <div class="subtitle">Preparing battlefield systems...</div>
 
     <div class="loading-container">
         <div class="progress-bar">
             <div class="progress" id="progress"></div>
         </div>
         <div class="loading-text" id="loadingText">
-            Initializing Systems...
+            Initializing...
         </div>
     </div>
 </div>
@@ -141,30 +139,59 @@ const loadingText = document.getElementById('loadingText');
 const loader = document.getElementById('loader');
 const iframe = document.getElementById('gameFrame');
 
+// 100+ randomized messages
 const messages = [
-    "Initializing Systems...",
-    "Loading Assets...",
-    "Establishing Connection...",
-    "Preparing Battlefield...",
-    "Deploying Sentinels...",
-    "Finalizing Launch..."
+"Spawning enemies...", "Calibrating towers...", "Loading projectiles...",
+"Upgrading defenses...", "Scanning terrain...", "Deploying units...",
+"Charging laser towers...", "Reinforcing walls...", "Loading wave data...",
+"Preparing boss enemy...", "Targeting systems online...", "Building maze...",
+"Generating enemy paths...", "Activating shields...", "Loading upgrades...",
+"Deploying snipers...", "Configuring AI enemies...", "Balancing difficulty...",
+"Summoning reinforcements...", "Charging cannons...", "Analyzing strategy...",
+"Mapping battlefield...", "Installing traps...", "Boosting tower range...",
+"Optimizing performance...", "Loading textures...", "Generating particles...",
+"Activating radar...", "Preparing artillery...", "Syncing waves...",
+"Loading enemy types...", "Enhancing graphics...", "Allocating resources...",
+"Loading sounds...", "Charging energy cores...", "Deploying turrets...",
+"Calculating trajectories...", "Initializing defense grid...", "Warming up engines...",
+"Spawning bosses...", "Generating chaos...", "Stabilizing systems...",
+"Loading shields...", "Enhancing AI...", "Checking upgrades...",
+"Preparing explosions...", "Aligning towers...", "Charging plasma...",
+"Loading defense units...", "Synchronizing systems...", "Activating drones...",
+"Calibrating weapons...", "Building defenses...", "Loading map...",
+"Preparing ambush...", "Deploying heavy units...", "Scanning enemies...",
+"Loading power-ups...", "Activating boosters...", "Preparing waves...",
+"Generating enemies...", "Upgrading base...", "Deploying rockets...",
+"Charging defenses...", "Loading battlefield...", "Analyzing threats...",
+"Deploying guardians...", "Preparing siege...", "Initializing turrets...",
+"Balancing waves...", "Loading core systems...", "Charging shields...",
+"Deploying lasers...", "Scanning perimeter...", "Loading upgrades...",
+"Activating cannons...", "Generating battle data...", "Preparing units...",
+"Loading defense systems...", "Charging weapons...", "Deploying traps...",
+"Enhancing systems...", "Loading enemies...", "Preparing battlefield...",
+"Activating modules...", "Generating map...", "Deploying towers...",
+"Loading defenses...", "Charging systems...", "Preparing attack...",
+"Analyzing map...", "Deploying snipers...", "Loading assets...",
+"Activating defense mode...", "Preparing units...", "Spawning wave...",
+"Charging ultimate weapon...", "Deploying elite units..."
 ];
+
+// shuffle messages
+messages.sort(() => Math.random() - 0.5);
 
 let value = 0;
 
+// slower loading (longer duration)
 const interval = setInterval(() => {
-    value += Math.random() * 12;
+    value += Math.random() * 3; // slower progress
 
     if (value > 100) value = 100;
 
     progress.style.width = value + "%";
 
-    const msgIndex = Math.min(
-        Math.floor((value / 100) * messages.length),
-        messages.length - 1
-    );
-
-    loadingText.textContent = messages[msgIndex];
+    // pick random message every tick
+    const randomMessage = messages[Math.floor(Math.random() * messages.length)];
+    loadingText.textContent = randomMessage;
 
     if (value >= 100) {
         clearInterval(interval);
@@ -175,15 +202,15 @@ const interval = setInterval(() => {
             setTimeout(() => {
                 loader.style.display = "none";
                 iframe.style.opacity = "1";
-            }, 1000);
-        }, 500);
+            }, 1200);
+        }, 800);
     }
-}, 250);
+}, 300);
 
 // Create stars
 const starsContainer = document.getElementById('stars');
 
-for(let i = 0; i < 120; i++) {
+for(let i = 0; i < 140; i++) {
     const star = document.createElement('div');
     star.classList.add('star');
 
